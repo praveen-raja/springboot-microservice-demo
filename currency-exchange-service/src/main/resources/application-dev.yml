@@ -1,0 +1,34 @@
+spring:
+  h2:
+    console:
+      path: /h2-console
+      enabled: 'true'
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: root
+    password: 
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: default
+  jpa:
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: 'true'
+    show-sql: 'true'
+  application:
+    name: currency-exchange
+  cloud:
+    config:
+      import-check:
+        enabled: false
+ 
+server:
+  port: 8000
+  
+# Actuator configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
