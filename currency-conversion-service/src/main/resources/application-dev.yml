@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: currency-conversion
+  cloud:
+    config:
+      import-check:
+        enabled: false
+ 
+server:
+  port: 8100
+  
+# Actuator configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
