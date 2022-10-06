@@ -1,3 +1,15 @@
 # CURRENCY EXCHANGE SERVICE
 
 http://localhost:8000/currency-exchange/from/USD/to/INR
+
+# CURRENCY CONVERSION SERVICE
+
+http://localhost:8100/currency-conversion/from/EUR/to/INR/quantity/10
+
+# EUREKA
+
+http://localhost:8761/
+
+API GATEWAY
+
+http://localhost:8765/
