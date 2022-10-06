@@ -1,4 +1,4 @@
-# CURRENCY EXCHANGE SERVICE
+# CURRENCY CONVERSION SERVICE
 
 ## URL
 
@@ -11,8 +11,8 @@ http://localhost:8100/currency-conversion/from/USD/to/INR/quantity/10
   "id": 10001,
   "from": "USD",
   "to": "INR",
-  "conversionMultiple": 65.00,
   "quantity": 10,
+  "conversionMultiple": 65.00,
   "totalCalculatedAmount": 650.00,
   "environment": "8000 instance-id"
 }
