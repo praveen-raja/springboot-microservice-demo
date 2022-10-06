@@ -19,3 +19,9 @@ management:
 service:
   url:
     currency-exchange: http://localhost:8000/
+    
+# EUREKA NAMING SERVER CONFIGURATION
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
