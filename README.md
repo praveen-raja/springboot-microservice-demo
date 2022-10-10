@@ -17,3 +17,15 @@ URL : http://localhost:8761/eureka
 URL : http://localhost:8765/currency-conversion/from/EUR/to/INR/quantity/10
 
 URL : http://localhost:8765/currency-exchange/from/USD/to/INR
+
+## ZIPKIN Server
+
+URL : http://localhost:9411/
+
+## RabbitMQ
+
+URL : http://localhost:15672/
+```
+Username: guest
+Password: guest
+```
