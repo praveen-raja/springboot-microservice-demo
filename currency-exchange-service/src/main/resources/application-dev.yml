@@ -2,11 +2,11 @@ spring:
   h2:
     console:
       path: /h2-console
-      enabled: 'true'
+      enabled: "true"
   datasource:
     url: jdbc:h2:mem:testdb
     username: root
-    password: 
+    password:
   data:
     jpa:
       repositories:
@@ -14,42 +14,45 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    defer-datasource-initialization: 'true'
-    show-sql: 'true'
+    defer-datasource-initialization: "true"
+    show-sql: "true"
   application:
     name: currency-exchange
   cloud:
     config:
       import-check:
         enabled: false
- 
+  # ZIPKIN CONFIGURATION
+  sleuth:
+    sampler:
+      probability: 1.0
+
 server:
   port: 8000
-  
+
 # Actuator configuration
 management:
   endpoints:
     web:
       exposure:
         include: "*"
-        
+
 # EUREKA NAMING SERVER CONFIGURATION
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
-      
+
 # RESILIENCE4J CONFIGURATION
 resilience4j:
   retry:
     instances:
-      sample-api: 
+      sample-api:
         maxAttempts: 5
         waitDuration: 2s
-        enableExponentialBackoff: 'true'
+        enableExponentialBackoff: "true"
   ratelimiter:
     instances:
       sample-api2:
         limitForPeriod: 2
         limitRefreshPeriod: 10s
-      

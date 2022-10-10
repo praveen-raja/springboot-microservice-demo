@@ -1,0 +1,86 @@
+version: '3.9'
+
+services:
+  currency-exchange:
+    build: currency-exchange-service/.
+    mem_limit: 700m
+    ports:
+      - "8000:8000"
+    networks: 
+      - microservice-network
+    depends_on:
+      - naming-server
+      - rabbitmq
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit 
+
+  currency-conversion:
+    build: currency-conversion-service/.
+    mem_limit: 700m
+    ports:
+      - "8100:8100"
+    networks: 
+      - microservice-network
+    depends_on:
+      - naming-server
+      - currency-exchange
+      - rabbitmq
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit 
+
+  api-gateway:
+    build: api-gateway/.
+    mem_limit: 700m
+    ports:
+      - "8765:8765"
+    networks: 
+      - microservice-network
+    depends_on:
+      - naming-server
+      - currency-exchange
+      - currency-conversion
+      - rabbitmq
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit 
+
+  naming-server:
+    build: naming-server/.
+    mem_limit: 700m
+    ports:
+      - "8761:8761"
+    networks: 
+      - microservice-network
+  
+  zipkin-server:
+    image: openzipkin/zipkin
+    mem_limit: 300m
+    ports: 
+      - "9411:9411"
+    networks:
+      - microservice-network
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+  
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    mem_limit: 300m
+    ports: 
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - microservice-network
+      
+networks:
+  microservice-network:
